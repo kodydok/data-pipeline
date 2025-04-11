@@ -33,6 +33,24 @@ export class Project0DataPipelineStack extends cdk.Stack {
       ],
     });
 
+    // Glue Crawler
+    const glueCrawler = new glue.CfnCrawler(this, 'GlueCrawler', {
+      role: glueRole.roleArn,
+      databaseName: 'mini_data_lake',
+      targets: {
+        s3Targets: [
+          {
+            path: `s3://${dataBucket.bucketName}/`,
+          },
+        ],
+      },
+      name: 'mini-data-lake-crawler',
+      schemaChangePolicy: {
+        updateBehavior: 'UPDATE_IN_DATABASE',
+        deleteBehavior: 'DEPRECATE_IN_DATABASE',
+      },
+    });
+
     // Grant S3 read access to Glue
     dataBucket.grantRead(glueRole);
 
