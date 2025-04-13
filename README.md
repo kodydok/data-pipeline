@@ -1,14 +1,26 @@
-# Welcome to your CDK TypeScript project
+# AWS Data Pipeline Project
 
-This is a blank project for CDK development with TypeScript.
+This project demonstrates a simple AWS data pipeline using AWS CDK, S3, Glue, and Athena. 
+The pipeline ingests a CSV file, catalogs it with Glue, transforms it using a Glue Job (PySpark), and saves the transformed output back to S3.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+# Technologies Used
 
-## Useful commands
+- AWS CDK (TypeScript) – Infrastructure as Code
+- AWS S3 – Data storage
+- AWS Glue – Data cataloging and ETL (Extract, Transform, Load)
+- Amazon Athena – Querying the cataloged data
 
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `npx cdk deploy`  deploy this stack to your default AWS account/region
-* `npx cdk diff`    compare deployed stack with current state
-* `npx cdk synth`   emits the synthesized CloudFormation template
+---
+
+# Project Overview
+
+- Created an AWS CDK project to define infrastructure.
+- Provisioned an S3 bucket to hold input and output data.
+- Uploaded a "sample_data.csv" file to the S3 bucket.
+- Created a Glue database and crawler using CDK to catalog the CSV file into a table.
+- Wrote a Glue ETL job using PySpark to:
+  - Read data from the catalog
+  - Transform the "name" field to uppercase
+  - Write the transformed data back to a new "output/" folder in the S3 bucket
+- Resolved S3 permission issues for the Glue job role
+- Queried the final output using Amazon Athena
